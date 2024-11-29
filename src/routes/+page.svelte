@@ -1,2 +1,12 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+  let {data} = $props()
+  let projects = data.projects
+</script>
+
+<h1>Projects</h1>
+
+<ul>
+  {#each projects as project}
+    <li>{project.name}</li>
+  {/each}
+</ul>
