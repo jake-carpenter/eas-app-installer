@@ -10,7 +10,7 @@ describe('import-data', () => {
       ]
     }))
 
-    const projects = await loadProjects()
+    const projects = await loadProjects({forceRefresh: true})
 
     expect(projects).toBeDefined()
     expect(projects['project-1'].name).toBe('Project 1')
@@ -33,7 +33,7 @@ describe('import-data', () => {
       ]
     }))
 
-    const projects = await loadProjects()
+    const projects = await loadProjects({forceRefresh: true})
 
     expect(projects['project-1'].builds).toHaveLength(2)
   })
@@ -56,7 +56,7 @@ describe('import-data', () => {
       ]
     }))
 
-    const projects = await loadProjects()
+    const projects = await loadProjects({forceRefresh: true})
     expect(projects['project-1'].builds[0]).toEqual(build)
   })
 
@@ -84,7 +84,7 @@ describe('import-data', () => {
       ]
     }))
 
-    const projects = await loadProjects()
+    const projects = await loadProjects({forceRefresh: true})
     const builds = projects['project-1'].builds
 
     expect(builds.map(b => b.id)).toEqual(['3', '2', '1'])

@@ -1,9 +1,15 @@
-import type {Build, Platform, Project} from '$lib/types'
+import type {Build, Platform, ProjectLookup} from '$lib/types'
 
-export async function loadProjects() {
-  const allBuilds = await readImportedBuildJson()
-  const mappedBuilds = mapBuilds(allBuilds)
-  return groupByProject(mappedBuilds)
+let projectLookup: ProjectLookup | undefined
+
+export async function loadProjects({forceRefresh}: {forceRefresh?: boolean} = {}) {
+  if (!projectLookup || forceRefresh) {
+    const allBuilds = await readImportedBuildJson()
+    const mappedBuilds = mapBuilds(allBuilds)
+    projectLookup = groupByProject(mappedBuilds)
+  }
+
+  return projectLookup
 }
 
 async function readImportedBuildJson() {
@@ -25,7 +31,7 @@ function mapBuilds(builds: Awaited<ReturnType<typeof readImportedBuildJson>>) {
 }
 
 function groupByProject(builds: BuildWithProject[]) {
-  return builds.reduce<Record<string, Project>>((acc, {project, build}) => {
+  return builds.reduce<ProjectLookup>((acc, {project, build}) => {
     if (!acc[project.slug]) {
       acc[project.slug] = {slug: project.slug, name: project.name, builds: []}
     }
