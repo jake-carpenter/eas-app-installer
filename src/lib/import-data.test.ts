@@ -1,12 +1,12 @@
 import {loadProjects} from './import-data'
-import type {Build} from '$lib/types'
+import fake from '$tests/fake'
 
 describe('import-data', () => {
   test('should return projects as a lookup keyed by the slug', async () => {
     vi.doMock('$lib/data/builds.json', () => ({
       default: [
-        {project: {slug: 'project-1', name: 'Project 1'}, completedAt: '2021-01-01T00:00:00Z'},
-        {project: {slug: 'project-2', name: 'Project 2'}, completedAt: '2021-01-01T00:00:00Z'}
+        fake.ExpoBuild({projectSlug: 'project-1', projectName: 'Project 1'}),
+        fake.ExpoBuild({projectSlug: 'project-2', projectName: 'Project 2'})
       ]
     }))
 
@@ -20,16 +20,8 @@ describe('import-data', () => {
   test('should map each build for a project', async () => {
     vi.doMock('$lib/data/builds.json', () => ({
       default: [
-        {
-          project: {slug: 'project-1', name: 'Project 1'},
-          platform: 'IOS',
-          completedAt: '2021-01-01T00:00:00Z'
-        },
-        {
-          project: {slug: 'project-1', name: 'Project 1'},
-          platform: 'ANDROID',
-          completedAt: '2021-01-01T00:00:01Z'
-        }
+        fake.ExpoBuild({projectSlug: 'project-1', projectName: 'Project 1', platform: 'IOS'}),
+        fake.ExpoBuild({projectSlug: 'project-1', projectName: 'Project 1', platform: 'ANDROID'})
       ]
     }))
 
@@ -39,11 +31,7 @@ describe('import-data', () => {
   })
 
   test('should map all data required data for a build', async () => {
-    const build: Build = {
-      id: '42',
-      platform: 'IOS',
-      completedAt: '2021-01-01T00:00:00Z'
-    }
+    const build = fake.Build()
 
     vi.doMock('$lib/data/builds.json', () => ({
       default: [
@@ -63,24 +51,27 @@ describe('import-data', () => {
   test('should sort builds in a project by latest completed date to oldest', async () => {
     vi.doMock('$lib/data/builds.json', () => ({
       default: [
-        {
+        fake.ExpoBuild({
           id: '1',
-          project: {slug: 'project-1', name: 'arbitrary'},
+          projectSlug: 'project-1',
+          projectName: 'Project 1',
           platform: 'IOS',
           completedAt: '2021-01-01T00:00:00Z'
-        },
-        {
+        }),
+        fake.ExpoBuild({
           id: '3',
-          project: {slug: 'project-1', name: 'arbitrary'},
+          projectSlug: 'project-1',
+          projectName: 'Project 1',
           platform: 'IOS',
           completedAt: '2021-01-01T00:02:00Z'
-        },
-        {
+        }),
+        fake.ExpoBuild({
           id: '2',
-          project: {slug: 'project-1', name: 'arbitrary'},
+          projectSlug: 'project-1',
+          projectName: 'Project 1',
           platform: 'ANDROID',
           completedAt: '2021-01-01T00:01:00Z'
-        }
+        })
       ]
     }))
 
