@@ -23,11 +23,11 @@ function mapBuilds(builds: Awaited<ReturnType<typeof readImportedBuildJson>>) {
       project: {slug: b.project.slug, name: b.project.name},
       build: {
         platform: b.platform as Platform,
-        completedAt: new Date(b.completedAt),
+        completedAt: b.completedAt,
         id: b.id
       }
     }))
-    .sort((a, b) => b.build.completedAt.getTime() - a.build.completedAt.getTime())
+    .sort((a, b) => b.build.completedAt.localeCompare(a.build.completedAt))
 }
 
 function groupByProject(builds: BuildWithProject[]) {

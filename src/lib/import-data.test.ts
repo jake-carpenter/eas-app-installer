@@ -5,8 +5,8 @@ describe('import-data', () => {
   test('should return projects as a lookup keyed by the slug', async () => {
     vi.doMock('$lib/data/builds.json', () => ({
       default: [
-        {project: {slug: 'project-1', name: 'Project 1'}},
-        {project: {slug: 'project-2', name: 'Project 2'}}
+        {project: {slug: 'project-1', name: 'Project 1'}, completedAt: '2021-01-01T00:00:00Z'},
+        {project: {slug: 'project-2', name: 'Project 2'}, completedAt: '2021-01-01T00:00:00Z'}
       ]
     }))
 
@@ -42,7 +42,7 @@ describe('import-data', () => {
     const build: Build = {
       id: '42',
       platform: 'IOS',
-      completedAt: new Date('2021-01-01T00:00:00Z')
+      completedAt: '2021-01-01T00:00:00Z'
     }
 
     vi.doMock('$lib/data/builds.json', () => ({
@@ -51,7 +51,7 @@ describe('import-data', () => {
           id: build.id,
           project: {slug: 'project-1', name: 'arbitrary'},
           platform: build.platform,
-          completedAt: build.completedAt.toISOString()
+          completedAt: build.completedAt
         }
       ]
     }))

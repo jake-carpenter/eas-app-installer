@@ -13,7 +13,7 @@ export interface ProjectWithBuilds {
 export interface Build {
   id: string
   platform: Platform
-  completedAt: Date
+  completedAt: string
 }
 
 export interface Project {
