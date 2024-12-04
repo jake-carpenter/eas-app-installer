@@ -84,23 +84,5 @@ describe('GET /builds', () => {
         expect(builds).toEqual([])
       })
     })
-
-    describe('and with a platform parameters', () => {
-      test.each([
-        {platform: 'iOS', length: 3},
-        {platform: 'ios', length: 3},
-        {platform: 'IOS', length: 3},
-        {platform: 'Android', length: 2},
-        {platform: 'android', length: 2},
-        {platform: 'ANDROID', length: 2},
-        {platform: 'aNdRoId', length: 2}
-      ])('returns only the $length builds for %platform', async ({platform, length}) => {
-        const url = new URL(`https://localhost/api/builds?project=project-2&platform=${platform}`)
-        const response = await GET({url})
-        const builds = (await response.json()) satisfies Build[]
-
-        expect(builds).toHaveLength(length)
-      })
-    })
   })
 })

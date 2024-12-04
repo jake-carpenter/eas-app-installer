@@ -9,12 +9,6 @@ export async function GET({url}) {
   const projectLookup = await loadProjects()
   const slug = url.searchParams.get('project')
   const project = projectLookup[slug!]
-  if (!project) return json([])
 
-  const platform = url.searchParams.get('platform')?.toUpperCase()
-  const builds = platform
-    ? project.builds.filter(build => build.platform === platform)
-    : project.builds
-
-  return json(builds)
+  return project ? json(project.builds) : json([])
 }
