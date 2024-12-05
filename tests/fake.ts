@@ -11,6 +11,12 @@ const fake = {
       id: faker.string.uuid(),
       completedAt: faker.date.recent().toISOString(),
       platform: faker.helpers.arrayElement(['IOS', 'ANDROID']),
+      appVersion: faker.system.semver(),
+      appBuildVersion: faker.number.int().toString(),
+      sdkVersion: faker.system.semver(),
+      buildProfile: faker.helpers.arrayElement(['development', 'preview', 'production']),
+      channel: faker.helpers.arrayElement(['development', 'preview', 'production']),
+      runtimeVersion: faker.system.semver(),
       ...options
     }
   },

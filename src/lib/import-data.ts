@@ -24,7 +24,13 @@ function mapBuilds(builds: Awaited<ReturnType<typeof readImportedBuildJson>>) {
       build: {
         platform: b.platform as Platform,
         completedAt: b.completedAt,
-        id: b.id
+        id: b.id,
+        appBuildVersion: b.appBuildVersion,
+        appVersion: b.appVersion,
+        sdkVersion: b.sdkVersion,
+        channel: b.channel,
+        buildProfile: b.buildProfile,
+        runtimeVersion: b.runtimeVersion
       }
     }))
     .sort((a, b) => b.build.completedAt.localeCompare(a.build.completedAt))

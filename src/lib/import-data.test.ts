@@ -39,7 +39,13 @@ describe('import-data', () => {
           id: build.id,
           project: {slug: 'project-1', name: 'arbitrary'},
           platform: build.platform,
-          completedAt: build.completedAt
+          completedAt: build.completedAt,
+          appVersion: build.appVersion,
+          appBuildVersion: build.appBuildVersion,
+          sdkVersion: build.sdkVersion,
+          buildProfile: build.buildProfile,
+          channel: build.channel,
+          runtimeVersion: build.runtimeVersion
         }
       ]
     }))

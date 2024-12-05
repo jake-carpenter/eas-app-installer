@@ -14,6 +14,12 @@ export interface Build {
   id: string
   platform: Platform
   completedAt: string
+  appVersion: string
+  appBuildVersion: string
+  sdkVersion: string
+  channel: string
+  buildProfile: string
+  runtimeVersion: string
 }
 
 export interface Project {
